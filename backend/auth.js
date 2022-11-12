@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+const jwt = require("jsonwebtoken");
 
 const PRIVATE_KEY = `
 -----BEGIN RSA PRIVATE KEY-----
@@ -20,13 +20,31 @@ MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJzaCL34ak/qMQEOd9tpeFL1f+oChscw
 `
 // NOTE: KEYS should come from environments 
 
-export const generateAuthToken = (payload) => {
+const generateAuthToken = (payload) => {
   return jwt.sign(payload, PRIVATE_KEY, {
     algorithm: 'RS256',
     expiresIn: '5m', // expressed in seconds or a string describing a time span zeit/ms -> https://github.com/zeit/ms. 
   });
 };
 
-export const verifyAuthToken = (token) => {
+const verifyAuthToken = (token) => {
   return jwt.verify(token, PUBLIC_KEY, { algorithms: ['RS256'] });
+};
+
+// Middleware
+const authenticate = (req, res, next) => {
+    try {
+        let token = req.cookies["teamShikshaToken"];
+        const { name } = verifyAuthToken(token);
+        req.userData = name
+        next()
+
+    } catch (err) {
+        return res.status(500).send("Unauthenticated User");
+    }
+};
+
+module.exports = {
+    generateAuthToken,
+    authenticate
 };
