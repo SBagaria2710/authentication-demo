@@ -7,6 +7,7 @@ const app = express();
 
 // Fake DB
 const users = [];
+
 const COOKIE_NAME = "teamShikshaToken";
 const COOKIE_EXPIRES = new Date(Date.now() + 300000); // 5 mins
 
@@ -15,9 +16,6 @@ app.use(express.json(), cookieParser());
 
 
 // Endpoints
-app.get("/health", (_, res) => {
-    res.status(200).send("All good! Thanks for checking :)");
-});
 
 // Get All Users
 app.get("/users", (_, res) => {
@@ -51,7 +49,7 @@ app.post("/users", async (req, res) => {
 
 app.post("/users/login", async (req, res) => {
     const user = users.find(user => user.name === req.body.name);
-    if (!user) return res.status(400).send("User not found");
+    if (!user) return res.status(404).send("User not found");
     try {
         if (await bcrypt.compare(req.body.password, user.password)) {
             const token = generateAuthToken({ name: req.body.name });
