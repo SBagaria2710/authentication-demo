@@ -27,6 +27,9 @@ app.get("/users", (_, res) => {
  * request = { user: String, password: String }
  */
 app.post("/users", async (req, res) => {
+    const user = users.find(user => user.name === req.body.name);
+    if (user) return res.status(401).send("User already exist");
+
     try {
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -36,7 +39,6 @@ app.post("/users", async (req, res) => {
             password: hashedPassword
         };
 
-        console.log(req.body, user);
         // Push to Fake DB
         users.push(user);
 
