@@ -28,7 +28,7 @@ app.get("/users", (_, res) => {
  */
 app.post("/users", async (req, res) => {
     const user = users.find(user => user.name === req.body.name);
-    if (user) return res.status(401).send("User already exist");
+    if (user) return res.status(403).send("User already exist");
 
     try {
         const salt = await bcrypt.genSalt();
