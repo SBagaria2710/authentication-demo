@@ -23,7 +23,7 @@ MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJzaCL34ak/qMQEOd9tpeFL1f+oChscw
 const generateAuthToken = (payload) => {
   return jwt.sign(payload, PRIVATE_KEY, {
     algorithm: 'RS256',
-    expiresIn: '5m', // expressed in seconds or a string describing a time span zeit/ms -> https://github.com/zeit/ms. 
+    expiresIn: '2m', // expressed in seconds or a string describing a time span zeit/ms -> https://github.com/zeit/ms. 
   });
 };
 
