@@ -9,7 +9,7 @@ const app = express();
 const users = [];
 
 const COOKIE_NAME = "teamShikshaToken";
-const COOKIE_EXPIRES = new Date(Date.now() + 300000); // 5 mins
+const COOKIE_EXPIRES = new Date(Date.now() + 600000); // 5 mins
 
 // Middleware
 app.use(express.json(), cookieParser());
