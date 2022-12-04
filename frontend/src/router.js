@@ -12,15 +12,28 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: Home,
-      meta: { requiresAuth: false }
+      meta: { loginRequired: false }
     },
     {
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard,
-      meta: { requiresAuth: true }
+      meta: { loginRequired: true }
     }
   ]
+});
+
+router.beforeEach((to, from, next) => {
+  // const { user } = useAuth() || {};
+
+  // Not logged into a guarded route?
+  // if ( to.meta.requiresAuth && !user?.value ) next({ name: 'login' })
+
+  // Logged in for an auth route
+  // else if ( (to.name == 'login' || to.name == 'register') && !user.value ) next({ name: 'home' })
+
+  // Carry On...
+  next()
 })
 
 export default router
