@@ -1,9 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from "./views/Home.vue";
 import Dashboard from './views/Dashboard.vue'
-
-// const Home = { template: '<div>Home</div>' }
-// const Dashboard = { template: '<div>About</div>' }
+import Login from "./views/Login.vue";
+import Register from "./views/Register.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -15,11 +14,23 @@ const router = createRouter({
       meta: { loginRequired: false }
     },
     {
+      path: '/login',
+      name: 'login',
+      component: Login,
+      meta: { loginRequired: false }
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register,
+      meta: { loginRequired: false }
+    },
+    {
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard,
       meta: { loginRequired: true }
-    }
+    },
   ]
 });
 
@@ -27,7 +38,7 @@ router.beforeEach((to, from, next) => {
   // const { user } = useAuth() || {};
 
   // Not logged into a guarded route?
-  // if ( to.meta.requiresAuth && !user?.value ) next({ name: 'login' })
+  // if ( to.meta.loginRequired && !user?.value ) next({ name: 'login' })
 
   // Logged in for an auth route
   // else if ( (to.name == 'login' || to.name == 'register') && !user.value ) next({ name: 'home' })
